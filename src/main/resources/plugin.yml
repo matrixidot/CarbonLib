@@ -1,0 +1,6 @@
+name: CarbonLib
+version: '${project.version}'
+main: me.neo.carbonlib.Carbon
+api-version: 1.19
+authors: [ N3E0 ]
+description: A library to make writing plugins easier
