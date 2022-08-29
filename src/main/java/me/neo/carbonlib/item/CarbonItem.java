@@ -1,6 +1,7 @@
 package me.neo.carbonlib.item;
 
 import com.google.common.collect.Multimap;
+import me.neo.carbonlib.misc.CarbonScheduler;
 import me.neo.carbonlib.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,9 +23,9 @@ import java.util.function.Consumer;
 
 public class CarbonItem {
     private ItemStack item;
+    private ItemMeta meta;
     private Material material;
     private int amount;
-    private ItemMeta meta;
     private Map<Enchantment, Integer> enchants;
     private ItemFlag[] flags;
     private Multimap<Attribute, AttributeModifier> attributes;
@@ -32,7 +33,6 @@ public class CarbonItem {
     private List<String> lore;
     private boolean unbreakable;
     private int customModelData;
-    private PersistentDataContainer container = this.meta.getPersistentDataContainer();
 
     private Consumer<PlayerInteractEvent> rightClick = event -> {};
     private Consumer<PlayerInteractEvent> rightClickBlock = event -> {};
@@ -40,25 +40,18 @@ public class CarbonItem {
     private Consumer<PlayerInteractEvent> leftClickBlock = event -> {};
 
     private ItemStack lastItem;
+    private PersistentDataContainer container;
+
     public CarbonItem(ItemStack item) {
         this.item = item;
+        setItemMeta();
+        this.container = meta.getPersistentDataContainer();
     }
 
 
 
-    /**
-     * Creates an ItemStack with a material and an amount
-     * @param material The Material of the ItemStack to build
-     * @param amount The amount of the item
-     * @return returns instance of CarbonItem
-     *
-     */
-    public CarbonItem setItem(Material material, int amount) {
-        this.material = material;
-        this.amount = amount;
-        this.item = new ItemStack(material, amount);
+    private void setItemMeta() {
         this.meta = item.getItemMeta();
-        return this;
     }
 
     /**
@@ -66,7 +59,7 @@ public class CarbonItem {
      * @return The current ItemStack
      */
     public ItemStack getItem() {
-        return this.item;
+        return item;
     }
 
     /**
@@ -74,7 +67,7 @@ public class CarbonItem {
      * @return The current Material
      */
     public Material getMaterial() {
-        return this.material;
+        return item.getType();
     }
 
     /**
@@ -82,7 +75,7 @@ public class CarbonItem {
      * @return The ItemStack ItemMeta
      */
     public ItemMeta getMeta() {
-        return this.meta;
+        return meta;
     }
 
     /**
@@ -90,7 +83,7 @@ public class CarbonItem {
      * @return Amount of the TtemStack
      */
     public int getAmount() {
-        return this.amount;
+        return item.getAmount();
     }
 
     /**
