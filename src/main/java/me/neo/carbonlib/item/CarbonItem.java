@@ -1,7 +1,6 @@
 package me.neo.carbonlib.item;
 
 import com.google.common.collect.Multimap;
-import me.neo.carbonlib.misc.CarbonScheduler;
 import me.neo.carbonlib.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,7 +8,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,6 +15,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -26,7 +25,7 @@ public class CarbonItem {
     private ItemMeta meta;
     private Material material;
     private int amount;
-    private Map<Enchantment, Integer> enchants;
+    private Map<Enchantment, Integer> enchants = new HashMap<>();
     private ItemFlag[] flags;
     private Multimap<Attribute, AttributeModifier> attributes;
     private String displayName;
@@ -46,7 +45,6 @@ public class CarbonItem {
         this.item = item;
         setItemMeta();
         this.container = meta.getPersistentDataContainer();
-        this.enchants = meta.getEnchants();
         this.attributes = meta.getAttributeModifiers();
     }
 
@@ -323,15 +321,15 @@ public class CarbonItem {
      * @return The Final ItemStack
      */
     public ItemStack forge() {
-        this.item.setAmount(this.amount);
-        this.meta.setDisplayName(this.displayName);
-        this.meta.setLore(this.lore);
-        this.item.addUnsafeEnchantments(this.enchants);
-        this.meta.addItemFlags(this.flags);
-        this.meta.setAttributeModifiers(this.attributes);
-        this.meta.setUnbreakable(this.unbreakable);
-        this.meta.setCustomModelData(this.customModelData);
-        this.item.setItemMeta(this.meta);
+        if (amount == 0) { item.setAmount(1);} else {item.setAmount(amount);}
+        meta.setDisplayName(displayName);
+        meta.setLore(lore);
+        item.addUnsafeEnchantments(enchants);
+        if (flags != null) meta.addItemFlags(flags);
+        meta.setAttributeModifiers(attributes);
+        meta.setUnbreakable(unbreakable);
+        meta.setCustomModelData(customModelData);
+        item.setItemMeta(meta);
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
         CarbonItemCache.getCache().addItem(item, new CarbonItemObject(this));
