@@ -26,9 +26,9 @@ public class CarbonInventoryBuilder {
     private CarbonInventoryRows rows;
     private String title;
 
-    private Consumer<InventoryClickEvent> clickEventConsumer  = event -> {};
-    private Consumer<InventoryDragEvent> dragEventConsumer  = event -> {};
-    private Consumer<InventoryCloseEvent> closeEventConsumer  = event -> {};
+    private Consumer<InventoryClickEvent> clickEventConsumer = event -> {};
+    private Consumer<InventoryDragEvent> dragEventConsumer = event -> {};
+    private Consumer<InventoryCloseEvent> closeEventConsumer = event -> {};
 
     private Inventory lastInventory;
 

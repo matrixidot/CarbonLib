@@ -1,11 +1,14 @@
 package me.neo.carbonlib.item;
 
 import com.google.common.collect.Multimap;
+import me.neo.carbonlib.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -15,6 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class CarbonItem {
     private ItemStack item;
@@ -30,10 +34,17 @@ public class CarbonItem {
     private int customModelData;
     private PersistentDataContainer container = this.meta.getPersistentDataContainer();
 
+    private Consumer<PlayerInteractEvent> rightClick = event -> {};
+    private Consumer<PlayerInteractEvent> rightClickBlock = event -> {};
+    private Consumer<PlayerInteractEvent> leftClick = event -> {};
+    private Consumer<PlayerInteractEvent> leftClickBlock = event -> {};
 
+    private ItemStack lastItem;
     public CarbonItem(ItemStack item) {
         this.item = item;
     }
+
+
 
     /**
      * Creates an ItemStack with a material and an amount
@@ -272,6 +283,42 @@ public class CarbonItem {
         return this.container;
     }
 
+    public ItemStack getLastItem() {
+        return Util.getOrDefault(lastItem, forge());
+    }
+    public CarbonItem setLastItem(ItemStack lastItem) {
+        this.lastItem = lastItem;
+        return this;
+    }
+
+    public Consumer<PlayerInteractEvent> getRightClick() {
+        return rightClick;
+    }
+    public void setRightClick(Consumer<PlayerInteractEvent> rightClick) {
+        this.rightClick = rightClick;
+    }
+
+    public Consumer<PlayerInteractEvent> getRightClickBlock() {
+        return rightClickBlock;
+    }
+    public void setRightClickBlock(Consumer<PlayerInteractEvent> rightClickBlock) {
+        this.rightClickBlock = rightClickBlock;
+    }
+
+    public Consumer<PlayerInteractEvent> getLeftClick() {
+        return leftClick;
+    }
+    public void setLeftClick(Consumer<PlayerInteractEvent> leftClick) {
+        this.leftClick = leftClick;
+    }
+
+    public Consumer<PlayerInteractEvent> getLeftClickBlock() {
+        return leftClickBlock;
+    }
+    public void setLeftClickBlock(Consumer<PlayerInteractEvent> leftClickBlock) {
+        this.leftClickBlock = leftClickBlock;
+    }
+
     /**
      * Forges the final ItemStack for use
      * @return The Final ItemStack
@@ -286,6 +333,9 @@ public class CarbonItem {
         this.meta.setUnbreakable(this.unbreakable);
         this.meta.setCustomModelData(this.customModelData);
         this.item.setItemMeta(this.meta);
+        setLastItem(item);
+        // Adds the itemStack along with an instance of the builder to the item cache
+        CarbonItemCache.getCache().addItem(item, new CarbonItemObject(this));
         return item;
     }
 

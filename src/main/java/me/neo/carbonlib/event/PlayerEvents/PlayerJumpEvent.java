@@ -1,4 +1,4 @@
-package me.neo.carbonlib.event;
+package me.neo.carbonlib.event.PlayerEvents;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

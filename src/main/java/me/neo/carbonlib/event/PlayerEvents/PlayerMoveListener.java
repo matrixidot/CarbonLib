@@ -1,5 +1,6 @@
-package me.neo.carbonlib.event;
+package me.neo.carbonlib.event.PlayerEvents;
 
+import me.neo.carbonlib.event.CarbonEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerMoveListener implements Listener {
-    @EventHandler
+
     /**
      * Registers does the Logic for the PlayerJumpEvent. Nothing else really important.
      * To use PlayerJumpEvent do
@@ -17,6 +18,7 @@ public class PlayerMoveListener implements Listener {
      *     logic
      * });
      */
+    @EventHandler
     public void onMove() {
         CarbonEvent.registerEvent(PlayerMoveEvent.class, event -> {
             double y1 = event.getFrom().getY();
