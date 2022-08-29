@@ -11,14 +11,14 @@ public class CarbonItemCache {
 
     public CarbonItemCache() {
         cache = this;
-        new ItemListener();
     }
 
-    public static CarbonItemCache getCache() { return Util.getOrDefault(cache, new CarbonItemCache()); }
+    public static CarbonItemCache getCache() { return cache; }
     // Adds or replaces an Item along with its builder
     public void addItem(ItemStack item, CarbonItemObject builder) {
         if (customItems.containsKey(item)) customItems.replace(item, builder);
         else customItems.put(item, builder);
+        System.out.println(customItems);
     }
     // Returns the builder object
     public Optional<CarbonItemObject> getItem(ItemStack item) {

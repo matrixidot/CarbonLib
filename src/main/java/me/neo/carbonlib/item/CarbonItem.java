@@ -45,7 +45,6 @@ public class CarbonItem {
         this.item = item;
         setItemMeta();
         this.container = meta.getPersistentDataContainer();
-        this.attributes = meta.getAttributeModifiers();
     }
 
 
