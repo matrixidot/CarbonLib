@@ -294,29 +294,33 @@ public class CarbonItem {
     public Consumer<PlayerInteractEvent> getRightClick() {
         return rightClick;
     }
-    public void setRightClick(Consumer<PlayerInteractEvent> rightClick) {
+    public CarbonItem setRightClick(Consumer<PlayerInteractEvent> rightClick) {
         this.rightClick = rightClick;
+        return this;
     }
 
     public Consumer<PlayerInteractEvent> getRightClickBlock() {
         return rightClickBlock;
     }
-    public void setRightClickBlock(Consumer<PlayerInteractEvent> rightClickBlock) {
+    public CarbonItem setRightClickBlock(Consumer<PlayerInteractEvent> rightClickBlock) {
         this.rightClickBlock = rightClickBlock;
+        return this;
     }
 
     public Consumer<PlayerInteractEvent> getLeftClick() {
         return leftClick;
     }
-    public void setLeftClick(Consumer<PlayerInteractEvent> leftClick) {
+    public CarbonItem setLeftClick(Consumer<PlayerInteractEvent> leftClick) {
         this.leftClick = leftClick;
+        return this;
     }
 
     public Consumer<PlayerInteractEvent> getLeftClickBlock() {
         return leftClickBlock;
     }
-    public void setLeftClickBlock(Consumer<PlayerInteractEvent> leftClickBlock) {
+    public CarbonItem setLeftClickBlock(Consumer<PlayerInteractEvent> leftClickBlock) {
         this.leftClickBlock = leftClickBlock;
+        return this;
     }
 
     /**
