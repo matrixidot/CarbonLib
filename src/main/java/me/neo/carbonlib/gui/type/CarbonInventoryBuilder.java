@@ -82,6 +82,7 @@ public class CarbonInventoryBuilder {
             inventory.setItem(slot, item);
         }
         setLastInventory(inventory);
+        InventoryCache.getCache().setLastInventory(inventory, new InventoryObject(this));
         return inventory;
     }
 
@@ -117,20 +118,6 @@ public class CarbonInventoryBuilder {
         return this;
     }
 
-    public CarbonInventoryBuilder addPlayer(Player player) {
-        if (player == null) {
-            return this;
-        }
-        UUID uuid = player.getUniqueId();
-        InventoryCache.getCache().setLastInventory(uuid, new InventoryObject(this));
-        player.openInventory(getLastInventory());
-        return this;
-    }
-
-    public CarbonInventoryBuilder addPlayers(@NotNull List<Player> players) {
-        players.forEach(this::addPlayer);
-        return this;
-    }
 
     public Inventory getLastInventory() {
         return getOrDefault(lastInventory, build());
@@ -138,11 +125,6 @@ public class CarbonInventoryBuilder {
 
     public CarbonInventoryBuilder setLastInventory(Inventory lastInventory) {
         this.lastInventory = lastInventory;
-        return this;
-    }
-
-    public CarbonInventoryBuilder setNoCloseable() {
-        closeEventConsumer = e -> addPlayer((Player) e.getPlayer());
         return this;
     }
 
