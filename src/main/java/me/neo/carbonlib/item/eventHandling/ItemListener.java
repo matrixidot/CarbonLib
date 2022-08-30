@@ -1,12 +1,12 @@
 package me.neo.carbonlib.item.eventHandling;
 
-import me.neo.carbonlib.gui.misc.IHolder;
-import me.neo.carbonlib.gui.misc.InventoryCache;
+import me.neo.carbonlib.gui.IHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,15 +28,29 @@ public class ItemListener implements Listener {
         });
     }
 
+
+
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Inventory inventory = e.getClickedInventory();
         if (inventory != null) {
             if (inventory.getHolder() instanceof IHolder) {
-                System.out.println(inventory.getHolder() instanceof IHolder);
-                System.out.println(InventoryCache.getCache().getInventory(inventory));
                 CarbonItemCache.getCache().getItem(e.getCurrentItem()).ifPresent(inventoryItem -> {
                     inventoryItem.getInventoryItem().getClickAction().accept(e);
+                    e.setCancelled(true);
+                });
+            }
+        }
+    }
+    @EventHandler
+    public void onInvDrag(InventoryDragEvent e) {
+        Inventory inventory = e.getInventory();
+        if (inventory != null) {
+            if (inventory.getHolder() instanceof IHolder) {
+                CarbonItemCache.getCache().getItem(e.getCursor()).ifPresent(inventoryItem -> {
+                    inventoryItem.getInventoryItem().getDragAction().accept(e);
+                    e.setCancelled(true);
                 });
             }
         }

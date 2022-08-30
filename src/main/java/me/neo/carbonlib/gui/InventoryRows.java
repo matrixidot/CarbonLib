@@ -1,4 +1,4 @@
-package me.neo.carbonlib.gui.misc;
+package me.neo.carbonlib.gui;
 
 public enum InventoryRows {
     ROWS_1(9),

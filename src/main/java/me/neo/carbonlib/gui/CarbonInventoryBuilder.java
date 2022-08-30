@@ -1,15 +1,9 @@
-package me.neo.carbonlib.gui.type;
+package me.neo.carbonlib.gui;
 
-import me.neo.carbonlib.gui.misc.IHolder;
-import me.neo.carbonlib.gui.misc.InventoryCache;
-import me.neo.carbonlib.gui.misc.InventoryObject;
-import me.neo.carbonlib.gui.misc.InventoryRows;
-import me.neo.carbonlib.gui.pattern.InventoryPattern;
 import me.neo.carbonlib.item.CarbonInventoryItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -18,9 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Consumer;
 
 import static me.neo.carbonlib.utils.Util.getOrDefault;
@@ -82,7 +74,6 @@ public class CarbonInventoryBuilder {
             inventory.setItem(slot, item);
         }
         setLastInventory(inventory);
-        InventoryCache.getCache().setInventory(inventory, new InventoryObject(this));
         return inventory;
     }
 

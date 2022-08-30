@@ -1,4 +1,4 @@
-package me.neo.carbonlib.gui.pattern;
+package me.neo.carbonlib.gui;
 
 import me.neo.carbonlib.item.CarbonInventoryItem;
 import org.bukkit.Material;

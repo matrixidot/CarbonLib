@@ -1,4 +1,4 @@
-package me.neo.carbonlib.gui.misc;
+package me.neo.carbonlib.gui;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
