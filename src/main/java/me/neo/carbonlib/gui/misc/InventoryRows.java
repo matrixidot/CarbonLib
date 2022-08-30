@@ -1,6 +1,6 @@
 package me.neo.carbonlib.gui.misc;
 
-public enum CarbonInventoryRows {
+public enum InventoryRows {
     ROWS_1(9),
     ROWS_2(18),
     ROWS_3(27),
@@ -10,14 +10,10 @@ public enum CarbonInventoryRows {
 
     private final int i;
 
-    CarbonInventoryRows(int i) {
+    InventoryRows(int i) {
         this.i = i;
     }
 
-    /**
-     * Gets the size of the inventory in rows. Multiply by 9 to get number of slots
-     * @return The number of rows the inventory has
-     */
     public int getSize() {
         return i;
     }

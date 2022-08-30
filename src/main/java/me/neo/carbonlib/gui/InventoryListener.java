@@ -1,9 +1,10 @@
 package me.neo.carbonlib.gui;
 
-import me.neo.carbonlib.event.CarbonEvent;
-import me.neo.carbonlib.gui.misc.CarbonInventoryCache;
-import me.neo.carbonlib.gui.misc.CarbonInventoryObject;
 import me.neo.carbonlib.gui.misc.IHolder;
+import me.neo.carbonlib.gui.misc.InventoryCache;
+import me.neo.carbonlib.gui.misc.InventoryObject;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -15,46 +16,57 @@ import org.bukkit.inventory.InventoryHolder;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InventoryListener {
+public class InventoryListener implements Listener {
 
-    public InventoryListener() {
-        CarbonEvent.registerEvent(PlayerItemConsumeEvent.class, e -> {
-            InventoryHolder holder = e.getPlayer().getOpenInventory().getTopInventory().getHolder();
-            e.setCancelled(holder instanceof IHolder);
-        });
-
-        CarbonEvent.registerEvent(InventoryClickEvent.class, e -> {
-            if (e.getAction().equals(InventoryAction.COLLECT_TO_CURSOR) && e.getInventory().getHolder() instanceof IHolder) e.setCancelled(true);
-        });
-
-        CarbonEvent.registerEvent(InventoryClickEvent.class, e -> {
-            Inventory inventory = e.getClickedInventory();
-            if (inventory == null) return;
-            if (!(inventory.getHolder() instanceof IHolder)) return;
-            UUID uuid = e.getWhoClicked().getUniqueId();
-            CarbonInventoryCache.getCache().getLastInventory(uuid).ifPresent(builder -> {
-                builder.getBuilder().getClickEvent().accept(e);
-                if (builder.isMainBuilder()) builder.getBuilder().getItem(e.getSlot()).ifPresent(item -> item.getClickAction().accept(e));
-                else builder.getPageBuilder().getItem(e.getSlot()).ifPresent(item -> item.getClickAction().accept(e));
-            });
-        });
-
-        CarbonEvent.registerEvent(InventoryDragEvent.class, e -> {
-            if (!(e.getInventory().getHolder() instanceof IHolder)) return;
-            UUID uuid = e.getWhoClicked().getUniqueId();
-            CarbonInventoryCache.getCache().getLastInventory(uuid).ifPresent(builder -> {
-                builder.getBuilder().getDragEvent().accept(e);
-                if (builder.isMainBuilder()) e.getInventorySlots().forEach(slot -> builder.getBuilder().getItem(slot).ifPresent(item -> item.getDragAction().accept(e)));
-                else e.getInventorySlots().forEach(slot -> builder.getPageBuilder().getItem(slot).ifPresent(item -> item.getDragAction().accept(e)));
-            });
-        });
-
-        CarbonEvent.registerEvent(InventoryCloseEvent.class, e -> {
-            UUID uuid = e.getPlayer().getUniqueId();
-            CarbonInventoryCache cache = CarbonInventoryCache.getCache();
-            Optional<CarbonInventoryObject> optional = cache.getLastInventory(uuid);
-            cache.removeLastInventory(uuid);
-            optional.ifPresent(builder -> builder.getBuilder().getCloseEvent().accept(e));
-        });
+    @EventHandler
+    public void playerItemConsume(PlayerItemConsumeEvent e) {
+        InventoryHolder holder = e.getPlayer().getOpenInventory().getTopInventory().getHolder();
+        e.setCancelled(holder instanceof IHolder);
     }
+
+    @EventHandler
+    public void collectToCursor(InventoryClickEvent e) {
+        if (e.getAction().equals(InventoryAction.COLLECT_TO_CURSOR) && e.getInventory().getHolder() instanceof IHolder) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onClick(InventoryClickEvent e) {
+        Inventory inventory = e.getClickedInventory();
+        if (inventory != null) {
+            if (inventory.getHolder() instanceof IHolder) {
+                UUID uuid = e.getWhoClicked().getUniqueId();
+                InventoryCache.getCache().getLastInventory(uuid).ifPresent(builder -> {
+                    builder.getBuilder().getClickEventConsumer().accept(e);
+                    if (builder.isMainBuilder()) {
+                        builder.getBuilder().getItem(e.getSlot()).ifPresent(item -> item.getClickAction().accept(e));
+                    }
+                });
+            }
+        }
+    }
+
+    @EventHandler
+    public void onDrag(InventoryDragEvent e) {
+        if (e.getInventory().getHolder() instanceof IHolder) {
+            UUID uuid = e.getWhoClicked().getUniqueId();
+            InventoryCache.getCache().getLastInventory(uuid).ifPresent(builder -> {
+                builder.getBuilder().getDragEventConsumer().accept(e);
+                if (builder.isMainBuilder()) {
+                    e.getInventorySlots().forEach(slot -> builder.getBuilder().getItem(slot).ifPresent(item -> item.getDragAction().accept(e)));
+                }
+            });
+        }
+    }
+
+    @EventHandler
+    public void  onClose(InventoryCloseEvent e) {
+        UUID uuid = e.getPlayer().getUniqueId();
+        InventoryCache cache = InventoryCache.getCache();
+        Optional<InventoryObject> optional = cache.getLastInventory(uuid);
+        cache.removeLastInventory(uuid);
+        optional.ifPresent(builder -> builder.getBuilder().getCloseEventConsumer().accept(e));
+    }
+
 }

@@ -1,6 +1,8 @@
 package me.neo.carbonlib.item;
 
 import com.google.common.collect.Multimap;
+import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
+import me.neo.carbonlib.item.eventHandling.CarbonItemObject;
 import me.neo.carbonlib.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

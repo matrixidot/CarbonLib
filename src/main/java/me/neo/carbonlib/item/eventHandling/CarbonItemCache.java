@@ -1,6 +1,5 @@
-package me.neo.carbonlib.item;
+package me.neo.carbonlib.item.eventHandling;
 
-import me.neo.carbonlib.utils.Util;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -18,7 +17,6 @@ public class CarbonItemCache {
     public void addItem(ItemStack item, CarbonItemObject builder) {
         if (customItems.containsKey(item)) customItems.replace(item, builder);
         else customItems.put(item, builder);
-        System.out.println(customItems);
     }
     // Returns the builder object
     public Optional<CarbonItemObject> getItem(ItemStack item) {

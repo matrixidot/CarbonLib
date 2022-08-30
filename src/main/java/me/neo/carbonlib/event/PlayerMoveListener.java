@@ -1,6 +1,6 @@
-package me.neo.carbonlib.event.PlayerEvents;
+package me.neo.carbonlib.event;
 
-import me.neo.carbonlib.event.CarbonEvent;
+import me.neo.carbonlib.event.PlayerJumpEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -19,8 +19,7 @@ public class PlayerMoveListener implements Listener {
      * });
      */
     @EventHandler
-    public void onMove() {
-        CarbonEvent.registerEvent(PlayerMoveEvent.class, event -> {
+    public void onMove(PlayerMoveEvent event) {
             double y1 = event.getFrom().getY();
             double y2 = event.getTo().getY();
             Player player = event.getPlayer();
@@ -36,8 +35,5 @@ public class PlayerMoveListener implements Listener {
             }
             event.setFrom(playerJumpEvent.getFromLocation());
             event.setTo(playerJumpEvent.getResultLocation());
-        });
     }
-
-
 }

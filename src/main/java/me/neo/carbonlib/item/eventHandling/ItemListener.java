@@ -1,6 +1,5 @@
-package me.neo.carbonlib.item;
+package me.neo.carbonlib.item.eventHandling;
 
-import me.neo.carbonlib.event.CarbonEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +12,6 @@ public class ItemListener implements Listener {
     @EventHandler
     public void register(PlayerInteractEvent e) {
         // Checks if the cache does not contain the item the player was holding. If it does not then it returns otherwise it continues
-            System.out.println(CarbonItemCache.getCache().customItems);
             if (!CarbonItemCache.getCache().hasItem(e.getPlayer().getInventory().getItemInMainHand())) return;
             Player player = e.getPlayer();
             ItemStack item = player.getInventory().getItemInMainHand();

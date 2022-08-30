@@ -1,6 +1,5 @@
-package me.neo.carbonlib.item;
+package me.neo.carbonlib.item.recipes;
 
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;

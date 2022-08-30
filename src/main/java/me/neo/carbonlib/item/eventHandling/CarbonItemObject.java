@@ -1,4 +1,6 @@
-package me.neo.carbonlib.item;
+package me.neo.carbonlib.item.eventHandling;
+
+import me.neo.carbonlib.item.CarbonItem;
 
 public class CarbonItemObject {
     private CarbonItem builder;
