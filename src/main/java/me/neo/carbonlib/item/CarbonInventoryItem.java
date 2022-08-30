@@ -1,5 +1,7 @@
 package me.neo.carbonlib.item;
 
+import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
+import me.neo.carbonlib.item.eventHandling.CarbonItemObject;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -41,7 +43,8 @@ public class CarbonInventoryItem implements Serializable {
     }
 
     public ItemStack getItemStack() {
-        return item.forge();
+        CarbonItemCache.getCache().addItem(item.invItemForge(), new CarbonItemObject(this));
+        return item.invItemForge();
     }
 
     public Consumer<InventoryClickEvent> getClickAction() {

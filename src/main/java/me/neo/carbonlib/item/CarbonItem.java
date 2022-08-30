@@ -336,5 +336,17 @@ public class CarbonItem {
         CarbonItemCache.getCache().addItem(item, new CarbonItemObject(this));
         return item;
     }
-
+    protected ItemStack invItemForge() {
+        if (amount == 0) { item.setAmount(1);} else {item.setAmount(amount);}
+        meta.setDisplayName(displayName);
+        meta.setLore(lore);
+        item.addUnsafeEnchantments(enchants);
+        if (flags != null) meta.addItemFlags(flags);
+        meta.setAttributeModifiers(attributes);
+        meta.setUnbreakable(unbreakable);
+        meta.setCustomModelData(customModelData);
+        item.setItemMeta(meta);
+        setLastItem(item);
+        return item;
+    }
 }

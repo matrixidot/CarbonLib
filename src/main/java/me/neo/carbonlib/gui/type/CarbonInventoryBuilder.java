@@ -82,7 +82,7 @@ public class CarbonInventoryBuilder {
             inventory.setItem(slot, item);
         }
         setLastInventory(inventory);
-        InventoryCache.getCache().setLastInventory(inventory, new InventoryObject(this));
+        InventoryCache.getCache().setInventory(inventory, new InventoryObject(this));
         return inventory;
     }
 
