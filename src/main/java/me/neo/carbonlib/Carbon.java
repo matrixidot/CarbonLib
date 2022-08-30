@@ -17,7 +17,6 @@ public final class Carbon extends AbstractCarbon {
     public void onEnable() {
         CarbonAPI.init(this);
         Bukkit.getServer().getPluginManager().registerEvents(new ItemListener(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         new CarbonItemCache();
         super.onEnable();
 
