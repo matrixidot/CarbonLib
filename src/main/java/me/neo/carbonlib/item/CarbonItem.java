@@ -1,8 +1,10 @@
 package me.neo.carbonlib.item;
 
 import com.google.common.collect.Multimap;
+import me.neo.carbonlib.Carbon;
 import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
 import me.neo.carbonlib.item.eventHandling.CarbonItemObject;
+import me.neo.carbonlib.plugin.AbstractCarbon;
 import me.neo.carbonlib.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -331,9 +333,10 @@ public class CarbonItem {
         meta.setUnbreakable(unbreakable);
         meta.setCustomModelData(customModelData);
         item.setItemMeta(meta);
+        container.set(new NamespacedKey(Carbon.getInstance(), "Custom"), PersistentDataType.STRING, "CarbonCustomItem");
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
-        CarbonItemCache.getCache().addItem(item, new CarbonItemObject(this));
+        CarbonItemCache.getCache().addItem(container.get(new NamespacedKey(AbstractCarbon.getPlugin(AbstractCarbon.class), "Custom"), PersistentDataType.STRING), new CarbonItemObject(this));
         return item;
     }
     protected ItemStack invItemForge() {
