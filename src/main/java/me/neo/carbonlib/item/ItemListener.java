@@ -26,6 +26,7 @@ public class ItemListener implements Listener {
         if (e.getPlayer().getInventory().getItemInMainHand().getType().isAir()) return;
         // Checks if the cache does not contain the item the player was holding. If it does not then it returns otherwise it continues
         System.out.println("not air");
+        System.out.println(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING));
         if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(key, PersistentDataType.STRING)))
             return;
         System.out.println("Has PDC");

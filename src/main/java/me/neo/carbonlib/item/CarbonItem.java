@@ -6,6 +6,7 @@ import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
 import me.neo.carbonlib.item.eventHandling.CarbonItemObject;
 import me.neo.carbonlib.plugin.AbstractCarbon;
 import me.neo.carbonlib.utils.Util;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -332,12 +333,13 @@ public class CarbonItem {
         meta.setAttributeModifiers(attributes);
         meta.setUnbreakable(unbreakable);
         meta.setCustomModelData(customModelData);
+        meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, ChatColor.stripColor(displayName));
         item.setItemMeta(meta);
         CarbonItemCache.getCache().addToItems(item);
-        container.set(key, PersistentDataType.STRING, "CarbonCustomItem");
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
         CarbonItemCache.getCache().addItem(container.get(key, PersistentDataType.STRING), new CarbonItemObject(this));
+        System.out.println(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING));
         return item;
     }
     protected ItemStack invItemForge() {
