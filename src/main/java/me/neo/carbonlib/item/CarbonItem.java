@@ -27,7 +27,6 @@ import java.util.function.Consumer;
 public class CarbonItem {
     private ItemStack item;
     private ItemMeta meta;
-    private Material material;
     private int amount;
     private Map<Enchantment, Integer> enchants = new HashMap<>();
     private ItemFlag[] flags;
@@ -44,17 +43,18 @@ public class CarbonItem {
 
     private ItemStack lastItem;
     private PersistentDataContainer container;
+    private final NamespacedKey key = new NamespacedKey(AbstractCarbon.getPlugin(AbstractCarbon.class), "Custom");
 
     public CarbonItem(ItemStack item) {
         this.item = item;
         setItemMeta();
-        this.container = meta.getPersistentDataContainer();
     }
 
 
 
     private void setItemMeta() {
         this.meta = item.getItemMeta();
+        this.container = this.meta != null ? this.meta.getPersistentDataContainer() : null;
     }
 
     /**
@@ -333,10 +333,10 @@ public class CarbonItem {
         meta.setUnbreakable(unbreakable);
         meta.setCustomModelData(customModelData);
         item.setItemMeta(meta);
-        container.set(new NamespacedKey(Carbon.getInstance(), "Custom"), PersistentDataType.STRING, "CarbonCustomItem");
+        container.set(key, PersistentDataType.STRING, "CarbonCustomItem");
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
-        CarbonItemCache.getCache().addItem(container.get(new NamespacedKey(AbstractCarbon.getPlugin(AbstractCarbon.class), "Custom"), PersistentDataType.STRING), new CarbonItemObject(this));
+        CarbonItemCache.getCache().addItem(container.get(key, PersistentDataType.STRING), new CarbonItemObject(this));
         return item;
     }
     protected ItemStack invItemForge() {
