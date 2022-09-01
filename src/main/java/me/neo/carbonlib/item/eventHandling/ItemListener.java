@@ -2,7 +2,6 @@ package me.neo.carbonlib.item.eventHandling;
 
 import me.neo.carbonlib.gui.IHolder;
 import me.neo.carbonlib.plugin.AbstractCarbon;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +10,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -42,7 +40,7 @@ public class ItemListener implements Listener {
             Inventory inventory = e.getClickedInventory();
             if (inventory != null) {
                 if (inventory.getHolder() instanceof IHolder) {
-                    CarbonInventoryItemCache.getCache().getItem(e.getCurrentItem()).ifPresent(inventoryItem -> {
+                    CarbonItemCache.getCache().getInvItem(e.getCurrentItem()).ifPresent(inventoryItem -> {
                         inventoryItem.getInventoryItem().getClickAction().accept(e);
                         e.setCancelled(true);
                     });
@@ -54,7 +52,7 @@ public class ItemListener implements Listener {
             Inventory inventory = e.getInventory();
             if (inventory != null) {
                 if (inventory.getHolder() instanceof IHolder) {
-                    CarbonInventoryItemCache.getCache().getItem(e.getCursor()).ifPresent(inventoryItem -> {
+                    CarbonItemCache.getCache().getInvItem(e.getCursor()).ifPresent(inventoryItem -> {
                         inventoryItem.getInventoryItem().getDragAction().accept(e);
                         e.setCancelled(true);
                     });
