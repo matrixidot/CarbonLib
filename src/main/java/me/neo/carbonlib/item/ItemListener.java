@@ -25,11 +25,7 @@ public class ItemListener implements Listener {
     public void onInteract(PlayerInteractEvent e) {
         if (e.getPlayer().getInventory().getItemInMainHand().getType().isAir()) return;
         // Checks if the cache does not contain the item the player was holding. If it does not then it returns otherwise it continues
-        System.out.println("not air");
-        System.out.println(e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING));
-        if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(key, PersistentDataType.STRING)))
-            return;
-        System.out.println("Has PDC");
+        if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(key, PersistentDataType.STRING)));
         Player player = e.getPlayer();
         String item = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING);
         // Creates the builder and does the simple consumer logic. Can add more events later.
@@ -67,11 +63,4 @@ public class ItemListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onCraft(CraftItemEvent e) {
-        if (CarbonItemCache.getCache().hasItems(e.getRecipe().getResult())) {
-            e.getRecipe().getResult().getItemMeta().getPersistentDataContainer().set(key, PersistentDataType.STRING, "Custom");
-            e.getRecipe().getResult().setItemMeta(e.getRecipe().getResult().getItemMeta());
-        }
-    }
 }

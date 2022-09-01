@@ -7,7 +7,6 @@ import java.util.*;
 public class CarbonItemCache {
     protected final Map<String, CarbonItemObject> customItems = new HashMap<>();
     protected final Map<ItemStack, CarbonItemObject> customInvItems = new HashMap<>();
-    protected final List<ItemStack> items = new ArrayList<>();
     private static CarbonItemCache cache;
 
     public CarbonItemCache() {
@@ -38,10 +37,4 @@ public class CarbonItemCache {
     }
     public boolean hasInvItem(ItemStack item) {return this.customInvItems.containsKey(item); }
 
-    public void addToItems(ItemStack item) {
-        items.add(item);
-    }
-    public boolean hasItems(ItemStack item) {
-        return items.contains(item);
-    }
 }

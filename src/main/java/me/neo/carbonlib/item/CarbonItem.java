@@ -335,11 +335,9 @@ public class CarbonItem {
         meta.setCustomModelData(customModelData);
         meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, ChatColor.stripColor(displayName));
         item.setItemMeta(meta);
-        CarbonItemCache.getCache().addToItems(item);
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
         CarbonItemCache.getCache().addItem(container.get(key, PersistentDataType.STRING), new CarbonItemObject(this));
-        System.out.println(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING));
         return item;
     }
     protected ItemStack invItemForge() {
