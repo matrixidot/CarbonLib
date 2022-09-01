@@ -15,7 +15,7 @@ Maven:
 	<dependency>
 	    <groupId>com.github.matrixidot</groupId>
 	    <artifactId>CarbonLib</artifactId>
-	    <version>v1.1.0-Release</version>
+	    <version>v1.1.1-Release</version>
 	</dependency>
 	
 Gradle:
@@ -27,5 +27,5 @@ Gradle:
 	}
 	
 		dependencies {
-	        implementation 'com.github.matrixidot:CarbonLib:v1.1.0-Release'
+	        implementation 'com.github.matrixidot:CarbonLib:v1.1.1-Release'
 	}
