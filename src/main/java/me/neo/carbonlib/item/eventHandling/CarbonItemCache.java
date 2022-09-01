@@ -2,13 +2,12 @@ package me.neo.carbonlib.item.eventHandling;
 
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class CarbonItemCache {
     protected final Map<String, CarbonItemObject> customItems = new HashMap<>();
     protected final Map<ItemStack, CarbonItemObject> customInvItems = new HashMap<>();
+    protected final List<ItemStack> items = new ArrayList<>();
     private static CarbonItemCache cache;
 
     public CarbonItemCache() {
@@ -38,4 +37,11 @@ public class CarbonItemCache {
         return Optional.ofNullable(customInvItems.get(item));
     }
     public boolean hasInvItem(ItemStack item) {return this.customInvItems.containsKey(item); }
+
+    public void addToItems(ItemStack item) {
+        items.add(item);
+    }
+    public boolean hasItems(ItemStack item) {
+        return items.contains(item);
+    }
 }

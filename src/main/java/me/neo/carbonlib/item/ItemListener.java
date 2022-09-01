@@ -1,12 +1,15 @@
-package me.neo.carbonlib.item.eventHandling;
+package me.neo.carbonlib.item;
 
 import me.neo.carbonlib.gui.IHolder;
+import me.neo.carbonlib.item.CarbonItem;
+import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
 import me.neo.carbonlib.plugin.AbstractCarbon;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,14 +18,17 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Objects;
 
+
 public class ItemListener implements Listener {
-    private NamespacedKey key = new NamespacedKey(AbstractCarbon.getPlugin(AbstractCarbon.class), "Custom");
+    protected static final NamespacedKey key = new NamespacedKey(AbstractCarbon.getInstance(), "Custom");
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getPlayer().getInventory().getItemInMainHand().getType().isAir()) return;
         // Checks if the cache does not contain the item the player was holding. If it does not then it returns otherwise it continues
+        System.out.println("not air");
         if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(key, PersistentDataType.STRING)))
             return;
+        System.out.println("Has PDC");
         Player player = e.getPlayer();
         String item = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING);
         // Creates the builder and does the simple consumer logic. Can add more events later.
@@ -35,29 +41,36 @@ public class ItemListener implements Listener {
     }
 
 
-        @EventHandler
-        public void onInvClick (InventoryClickEvent e){
-            Inventory inventory = e.getClickedInventory();
-            if (inventory != null) {
-                if (inventory.getHolder() instanceof IHolder) {
-                    CarbonItemCache.getCache().getInvItem(e.getCurrentItem()).ifPresent(inventoryItem -> {
-                        inventoryItem.getInventoryItem().getClickAction().accept(e);
-                        e.setCancelled(true);
-                    });
-                }
+    @EventHandler
+    public void onInvClick (InventoryClickEvent e){
+        Inventory inventory = e.getClickedInventory();
+        if (inventory != null) {
+            if (inventory.getHolder() instanceof IHolder) {
+                CarbonItemCache.getCache().getInvItem(e.getCurrentItem()).ifPresent(inventoryItem -> {
+                    inventoryItem.getInventoryItem().getClickAction().accept(e);
+                    e.setCancelled(true);
+                });
             }
         }
-        @EventHandler
-        public void onInvDrag (InventoryDragEvent e){
-            Inventory inventory = e.getInventory();
-            if (inventory != null) {
-                if (inventory.getHolder() instanceof IHolder) {
-                    CarbonItemCache.getCache().getInvItem(e.getCursor()).ifPresent(inventoryItem -> {
-                        inventoryItem.getInventoryItem().getDragAction().accept(e);
-                        e.setCancelled(true);
-                    });
-                }
+    }
+    @EventHandler
+    public void onInvDrag (InventoryDragEvent e){
+        Inventory inventory = e.getInventory();
+        if (inventory != null) {
+            if (inventory.getHolder() instanceof IHolder) {
+                CarbonItemCache.getCache().getInvItem(e.getCursor()).ifPresent(inventoryItem -> {
+                    inventoryItem.getInventoryItem().getDragAction().accept(e);
+                    e.setCancelled(true);
+                });
             }
         }
+    }
 
+    @EventHandler
+    public void onCraft(CraftItemEvent e) {
+        if (CarbonItemCache.getCache().hasItems(e.getRecipe().getResult())) {
+            e.getRecipe().getResult().getItemMeta().getPersistentDataContainer().set(key, PersistentDataType.STRING, "Custom");
+            e.getRecipe().getResult().setItemMeta(e.getRecipe().getResult().getItemMeta());
+        }
+    }
 }

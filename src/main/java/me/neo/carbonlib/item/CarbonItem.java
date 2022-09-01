@@ -43,7 +43,7 @@ public class CarbonItem {
 
     private ItemStack lastItem;
     private PersistentDataContainer container;
-    private final NamespacedKey key = new NamespacedKey(AbstractCarbon.getPlugin(AbstractCarbon.class), "Custom");
+    protected static final NamespacedKey key = ItemListener.key;
 
     public CarbonItem(ItemStack item) {
         this.item = item;
@@ -333,6 +333,7 @@ public class CarbonItem {
         meta.setUnbreakable(unbreakable);
         meta.setCustomModelData(customModelData);
         item.setItemMeta(meta);
+        CarbonItemCache.getCache().addToItems(item);
         container.set(key, PersistentDataType.STRING, "CarbonCustomItem");
         setLastItem(item);
         // Adds the itemStack along with an instance of the builder to the item cache
