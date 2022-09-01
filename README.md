@@ -15,5 +15,17 @@ Maven:
 	<dependency>
 	    <groupId>com.github.matrixidot</groupId>
 	    <artifactId>CarbonLib</artifactId>
-	    <version>v1.0.0-Beta</version>
+	    <version>v1.0.0-Release</version>
 	</dependency>
+	
+Gradle:
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	
+		dependencies {
+	        implementation 'com.github.matrixidot:CarbonLib:v1.0.0-Release'
+	}
