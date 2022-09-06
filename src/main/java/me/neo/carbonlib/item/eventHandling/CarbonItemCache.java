@@ -23,6 +23,9 @@ public class CarbonItemCache {
     public Optional<CarbonItemObject> getItem(String item) {
         return Optional.ofNullable(customItems.get(item));
     }
+    public List<String> getItems() {
+        return new ArrayList<>(customItems.keySet());
+    }
     // Checks if the cache contains the exact copy of the item passed into the method.
     public boolean hasItem(String item) {
         return this.customItems.containsKey(item);
