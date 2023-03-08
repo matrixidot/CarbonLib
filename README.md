@@ -19,6 +19,7 @@ Maven:
 	</dependency>
 	
 Gradle:
+
 	allprojects {
 		repositories {
 			...
