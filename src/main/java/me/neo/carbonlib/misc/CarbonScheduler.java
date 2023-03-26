@@ -1,5 +1,7 @@
 package me.neo.carbonlib.misc;
-import me.neo.carbonlib.Carbon;
+
+import me.neo.carbonlib.CarbonAPI;
+import me.neo.carbonlib.plugin.AbstractCarbon;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Contract;
@@ -42,49 +44,49 @@ public class CarbonScheduler extends BukkitRunnable implements Serializable {
     // Runs a task on a different thread after the specified delay
     @NotNull
     public synchronized CarbonScheduler runTaskLaterAsynchronously(long delay) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskLaterAsynchronously(Carbon.getPlugin(Carbon.class), delay);
+        this.task = super.runTaskLaterAsynchronously(AbstractCarbon.getPlugin(AbstractCarbon.class), delay);
         return this;
     }
     // Runs a bukkit task
     @NotNull
     public synchronized CarbonScheduler runTask() throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTask(Carbon.getPlugin(Carbon.class));
+        this.task = super.runTask(AbstractCarbon.getPlugin(AbstractCarbon.class));
         return this;
     }
     // Runs a task on the main thread after the specified delay
     @NotNull
     public synchronized CarbonScheduler runTaskLater(long delay) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskLater(Carbon.getPlugin(Carbon.class), delay);
+        this.task = super.runTaskLater(AbstractCarbon.getPlugin(AbstractCarbon.class), delay);
         return this;
     }
     // Runs a repeating task on a different thread after specified delay and in specified intervals
     @NotNull
     public synchronized CarbonScheduler runTaskTimerAsynchronously(long delay, long period) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskTimerAsynchronously(Carbon.getPlugin(Carbon.class), delay, period);
+        this.task = super.runTaskTimerAsynchronously(AbstractCarbon.getPlugin(AbstractCarbon.class), delay, period);
         return this;
     }
     // Runs a repeating task on a different thread after specified delay and in delay intervals
     @NotNull
     public synchronized CarbonScheduler runTaskTimerAsynchronously(long delay) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskTimerAsynchronously(Carbon.getPlugin(Carbon.class), delay, delay);
+        this.task = super.runTaskTimerAsynchronously(AbstractCarbon.getPlugin(AbstractCarbon.class), delay, delay);
         return this;
     }
     // Runs a repeating task on the main thread after a specified delay and in specified intervals
     @NotNull
     public synchronized CarbonScheduler runTaskTimer(long delay, long period) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskTimer(Carbon.getPlugin(Carbon.class), delay, period);
+        this.task = super.runTaskTimer(AbstractCarbon.getPlugin(AbstractCarbon.class), delay, period);
         return this;
     }
     // Runs a repeating task on the main thread after specified delay and in delay intervals
     @NotNull
     public synchronized CarbonScheduler runTaskTimer(long delay) throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskTimer(Carbon.getPlugin(Carbon.class), delay, delay);
+        this.task = super.runTaskTimer(AbstractCarbon.getPlugin(AbstractCarbon.class), delay, delay);
         return this;
     }
     // Runs a task on a different thread
     @NotNull
     public synchronized CarbonScheduler runTaskAsynchronously() throws IllegalArgumentException, IllegalStateException {
-        this.task = super.runTaskAsynchronously(Carbon.getPlugin(Carbon.class));
+        this.task = super.runTaskAsynchronously(AbstractCarbon.getPlugin(AbstractCarbon.class));
         return this;
     }
 

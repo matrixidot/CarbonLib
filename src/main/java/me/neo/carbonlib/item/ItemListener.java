@@ -1,12 +1,15 @@
 package me.neo.carbonlib.item;
 
-import me.neo.carbonlib.Carbon;
 import me.neo.carbonlib.gui.IHolder;
+import me.neo.carbonlib.item.CarbonItem;
 import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
+import me.neo.carbonlib.plugin.AbstractCarbon;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -17,17 +20,14 @@ import java.util.Objects;
 
 
 public class ItemListener implements Listener {
-    private Carbon plugin;
-    public ItemListener(Carbon plugin) {
-        this.plugin = plugin;
-    }
+    protected static final NamespacedKey key = new NamespacedKey(AbstractCarbon.getInstance(), "Custom");
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if (e.getPlayer().getInventory().getItemInMainHand().getType().isAir()) return;
         // Checks if the cache does not contain the item the player was holding. If it does not then it returns otherwise it continues
-        if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(plugin.key, PersistentDataType.STRING)));
+        if (!CarbonItemCache.getCache().hasItem(Objects.requireNonNull(e.getPlayer().getInventory().getItemInMainHand().getItemMeta()).getPersistentDataContainer().get(key, PersistentDataType.STRING)));
         Player player = e.getPlayer();
-        String item = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(plugin.key, PersistentDataType.STRING);
+        String item = player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING);
         // Creates the builder and does the simple consumer logic. Can add more events later.
         CarbonItemCache.getCache().getItem(item).ifPresent(builder -> {
             if (e.getAction() == Action.RIGHT_CLICK_AIR) builder.getBuilder().getRightClick().accept(e);

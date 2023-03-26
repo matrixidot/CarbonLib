@@ -1,7 +1,8 @@
 package me.neo.carbonlib.item.eventHandling;
-import org.bukkit.inventory.ItemStack;
-import java.util.*;
 
+import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
 
 public class CarbonItemCache {
     protected final Map<String, CarbonItemObject> customItems = new HashMap<>();

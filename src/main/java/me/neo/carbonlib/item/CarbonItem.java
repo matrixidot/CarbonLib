@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import me.neo.carbonlib.Carbon;
 import me.neo.carbonlib.item.eventHandling.CarbonItemCache;
 import me.neo.carbonlib.item.eventHandling.CarbonItemObject;
+import me.neo.carbonlib.plugin.AbstractCarbon;
 import me.neo.carbonlib.utils.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -43,7 +44,7 @@ public class CarbonItem {
 
     private ItemStack lastItem;
     private PersistentDataContainer container;
-    protected NamespacedKey key = Carbon.getKey();
+    protected static final NamespacedKey key = ItemListener.key;
 
     public CarbonItem(ItemStack item) {
         this.item = item;
